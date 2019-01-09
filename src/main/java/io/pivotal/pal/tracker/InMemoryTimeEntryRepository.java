@@ -23,7 +23,7 @@ public class InMemoryTimeEntryRepository implements  TimeEntryRepository{
     }
 
     @Override
-    public TimeEntry find(long timeEntryId) {
+    public TimeEntry find(Long timeEntryId) {
         return map.get(timeEntryId);
     }
 
@@ -32,7 +32,7 @@ public class InMemoryTimeEntryRepository implements  TimeEntryRepository{
     }
 
     @Override
-    public TimeEntry update(long id, TimeEntry timeEntry) {
+    public TimeEntry update(Long id, TimeEntry timeEntry) {
         TimeEntry obj = map.get(id);
         if (obj != null) {
             obj.setId(id);
@@ -47,7 +47,7 @@ public class InMemoryTimeEntryRepository implements  TimeEntryRepository{
     }
 
     @Override
-    public void delete(long id) {
+    public void delete(Long id) {
         map.remove(id);
     }
 }
