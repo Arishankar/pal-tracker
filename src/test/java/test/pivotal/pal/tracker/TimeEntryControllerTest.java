@@ -1,5 +1,8 @@
 package test.pivotal.pal.tracker;
 
+import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.DistributionSummary;
+import io.micrometer.core.instrument.MeterRegistry;
 import io.pivotal.pal.tracker.TimeEntry;
 import io.pivotal.pal.tracker.TimeEntryController;
 import io.pivotal.pal.tracker.TimeEntryRepository;
@@ -20,11 +23,20 @@ import static org.mockito.Mockito.*;
 public class TimeEntryControllerTest {
     private TimeEntryRepository timeEntryRepository;
     private TimeEntryController controller;
+    private MeterRegistry meterRegistry;
+    private Counter counter;
+    private DistributionSummary summary;
 
     @Before
     public void setUp() throws Exception {
         timeEntryRepository = mock(TimeEntryRepository.class);
-        controller = new TimeEntryController(timeEntryRepository);
+        meterRegistry = mock(MeterRegistry.class);
+        counter = mock(Counter.class);
+        summary = mock(DistributionSummary.class);
+        when(meterRegistry.counter(anyString())).thenReturn(counter);
+        when(meterRegistry.summary(anyString())).thenReturn(summary);
+
+        controller = new TimeEntryController(timeEntryRepository, meterRegistry);
     }
 
     @Test
